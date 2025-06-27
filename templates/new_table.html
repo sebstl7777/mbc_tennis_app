@@ -1,0 +1,19 @@
+<h2>New Table</h2>
+<form action="/save_table" method="post">
+{% for i in range(0,3) %}
+  <div>
+    Player:
+    <select name="player">
+      {% for p in players %}
+      <option>{{p.name}}</option>
+      {% endfor %}
+    </select>
+    {% for j in range(2,7) %}
+    <input type="number" name="s{{j}}" value="0">
+    {% endfor %}
+  </div>
+{% endfor %}
+  <button type="submit">Save Table</button>
+</form>
+<a href="/landing">Back</a>
+

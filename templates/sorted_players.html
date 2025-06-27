@@ -1,0 +1,9 @@
+<h2>Sorted Players</h2>
+<ul>
+  {% for p in players %}
+    <li><strong>{{ p.name }}</strong> — Rating: {{ "%.1f"|format(p.rating) }}</li>
+  {% endfor %}
+</ul>
+<a href="/sort_players">Back to Select Players</a> |
+<a href="/landing">Back to Landing</a>
+

@@ -1,0 +1,13 @@
+<h2>Saved Tables</h2>
+<ul>
+{% for t in tables %}
+  <li>
+    Table {{t.id}}
+    <form action="/apply_ratings/{{t.id}}" method="post" style="display:inline;">
+      <button type="submit">Apply Ratings</button>
+    </form>
+  </li>
+{% endfor %}
+</ul>
+<a href="/landing">Back</a>
+

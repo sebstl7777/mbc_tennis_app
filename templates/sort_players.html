@@ -1,0 +1,9 @@
+<h2>Select Players to Sort</h2>
+<form action="/sort_players" method="post">
+  {% for p in players %}
+    <input type="checkbox" name="selected" value="{{p.name}}"> {{p.name}}<br>
+  {% endfor %}
+  <button type="submit">Sort</button>
+</form>
+<a href="/landing">Back</a>
+
