@@ -149,3 +149,35 @@ def apply_ratings(table_id: int, db: Session = Depends(get_db)):
     db.commit()
     return {"updated": deltas}
 
+signup_list = []
+
+@app.get("/signup_list", response_class=HTMLResponse)
+def signup_get(request: Request, db: Session = Depends(get_db)):
+    players = db.query(models.Player).order_by(models.Player.name).all()
+    sorted_list = sorted(signup_list, key=lambda p: p.rating, reverse=True)
+    return templates.TemplateResponse("signup_list.html", {
+        "request": request,
+        "players": players,
+        "signup_list": sorted_list
+    })
+
+@app.post("/signup_list", response_class=HTMLResponse)
+def signup_post(request: Request, name: str = Form(...), db: Session = Depends(get_db)):
+    global signup_list
+    player = db.query(models.Player).filter(models.Player.name == name).first()
+    if player and player not in signup_list:
+        signup_list.append(player)
+    sorted_list = sorted(signup_list, key=lambda p: p.rating, reverse=True)
+    players = db.query(models.Player).order_by(models.Player.name).all()
+    return templates.TemplateResponse("signup_list.html", {
+        "request": request,
+        "players": players,
+        "signup_list": sorted_list
+    })
+
+@app.post("/signup_discard", response_class=HTMLResponse)
+def discard_signup(request: Request):
+    global signup_list
+    signup_list = []
+    return RedirectResponse(url="/signup_list", status_code=303)
+

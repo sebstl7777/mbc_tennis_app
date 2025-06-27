@@ -1,0 +1,28 @@
+<h2>Signup List</h2>
+
+<form method="post" action="/signup_list">
+  <label for="name">Add Player:</label>
+  <select name="name">
+    {% for p in players %}
+      <option value="{{ p.name }}">{{ p.name }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit">Add</button>
+</form>
+
+{% if signup_list %}
+  <h3>Ranked List:</h3>
+  <ul>
+    {% for p in signup_list %}
+      <li><strong>{{ p.name }}</strong> — Rating: {{ "%.1f"|format(p.rating) }}</li>
+    {% endfor %}
+  </ul>
+  <form method="post" action="/signup_discard">
+    <button type="submit">Discard List</button>
+  </form>
+{% else %}
+  <p>No players in the list.</p>
+{% endif %}
+
+<p><a href="/landing">Back to Landing</a></p>
+
