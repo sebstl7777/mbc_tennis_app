@@ -140,8 +140,8 @@ def apply_ratings(table_id: int, db: Session = Depends(get_db)):
         opp_ratings = [player_ratings[o] for o in opps]
         avg_opp = sum(opp_ratings) / len(opp_ratings) if opp_ratings else 0
         me_rating = player_ratings[pid]
-        scaled_op = avg_opp - me_rating
-        scaled_score = (row["sum"] / total_sum) * n - 1 if total_sum > 0 else 0
+        scaled_op = (avg_opp - me_rating) / 2
+        scaled_score = ((row["sum"] / total_sum) * n - 1)*6 if total_sum > 0 else 0
         deltas[pid] = scaled_op + scaled_score
     for pid, dr in deltas.items():
         p = db.query(models.Player).filter(models.Player.name == pid).first()
